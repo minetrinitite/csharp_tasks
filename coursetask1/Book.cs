@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace coursetask1
@@ -33,15 +30,7 @@ namespace coursetask1
 
             return properties;
         }
-
-        //public void printProperties() //for tests
-        //{
-        //    foreach (KeyValuePair<string, string> value in this.getProperties())
-        //    {
-        //        Console.WriteLine("{0} : {1}", value.Key, value.Value);
-        //    }
-        //}
-
+        
         public void printName() //for tests
         {
             Console.WriteLine("Book Name: {0}", this._book);
@@ -50,6 +39,13 @@ namespace coursetask1
         public Owner checkWhere()
         {
             return _owner;
+        }
+
+        public int whenGiven()
+        {
+            if (this._isGiven)
+                return this._timeGiven;
+            return 0;
         }
     }
 }

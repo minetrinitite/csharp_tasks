@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace coursetask1
 {
@@ -16,6 +12,6 @@ namespace coursetask1
 
         Owner checkWhere();
 
-        //int whenGiven();
+        int whenGiven();
     }
 }

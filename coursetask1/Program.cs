@@ -140,8 +140,6 @@ namespace coursetask1
             lib.addReader(sub3);
             printDict(lib.getSubscribers()[2].getProperties());  //Terry Pratchett, +123456789
 
-
-            //Console.WriteLine(e.Message);Console.WriteLine(e.Message);Console.WriteLine(e.Message);Console.WriteLine(e.Message);
             //search by author
             printBookNames(lib.searchBooksByAuthor("Metz")); //one
             printBookNames(lib.searchBooksByAuthor("Mehz")); //one

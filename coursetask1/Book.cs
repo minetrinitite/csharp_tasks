@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+//using NUnit.Framework;
 
 
 namespace coursetask1
@@ -13,7 +14,7 @@ namespace coursetask1
         public int _timeGiven;
         public Owner _owner;
 
-        public Book(string author, string name, bool rare = false)
+        public Book(string author = "no author", string name = "no name", bool rare = false)
         {
             this._book = name;
             this._author = author;

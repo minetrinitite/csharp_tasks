@@ -2,14 +2,34 @@
 using System.Collections.Generic;
 using System.Linq;
 
+
+
 namespace coursetask1
 {
     class Library : Owner, ILibrary
     {
         private List<Subscription> readers = new List<Subscription>();
         private List<Book> given = new List<Book>();
-        public int _maxBooks = 5;
-        public int _maxRare = 1;
+        public readonly int _maxBooks = 5;
+        public readonly int _maxRare = 1;
+
+        public event Action<Subscription> subscriberAdded1;
+        public event Action<Book> bookAdded1;
+        public event Action<Book, object> bookStateChanged1;
+
+        private Action<Subscription> subscriberAdded = (Subscription s) => { Console.WriteLine("Subscriber " + s._name + " was added"); };
+        private Action<Book> bookAdded = (Book b) => { Console.WriteLine("\"" + b._book + "\" was added to Library"); };
+        private Action<Book, object> bookStateChanged = (Book b, object sender) => {
+            Subscription sub = sender as Subscription;
+            if (b._isGiven)
+            {
+                Console.WriteLine("\"" + b._book + "\" was given to " + sub._name);
+            }
+            else
+            {
+                Console.WriteLine("\"" + b._book + "\" was returned to Library from" + sub._name);
+            }            
+        };
 
         public Library(List<Book> core, List<Subscription> subs)
         {
@@ -22,14 +42,35 @@ namespace coursetask1
             this.addBook(newOne);
         }
 
+        public static int getHash(string author, string title)
+        {
+            return (author.GetHashCode() + title.GetHashCode());
+        }
+
+        public IBook this[string author, string title]
+        {
+            get
+            {
+                int h = getHash(author, title);
+                foreach(Book b in this.getAllBooks())
+                {
+                    if (getHash(b._author, b._book) == h)
+                        return b;
+                }
+                return null;
+            }
+        }
+        
         public void addReader(Subscription newOne)
         {
             this.readers.Add(newOne);
+            subscriberAdded?.Invoke(newOne);
         }
 
         public void addBook(Book newOne)
         {
             this.owned.Add(newOne);
+            bookAdded.Invoke(newOne);
         }
 
         public List<Book> getAllBooks()
@@ -77,7 +118,7 @@ namespace coursetask1
 
         public List<Book> getOccupiedBooks() 
         {
-            return given;
+            return this.given;
         }
 
         public void giveBook(Book subject, Subscription reciever)
@@ -113,6 +154,7 @@ namespace coursetask1
                 counter++;
                 this.given.Add(subject);
                 counter++;
+                bookStateChanged.Invoke(subject, reciever);
             }
             catch (Exception e) //rewind the changes
             {
@@ -182,6 +224,7 @@ namespace coursetask1
                 counter++;
                 subject._timeGiven = 0;
                 counter++;
+                bookStateChanged.Invoke(subject, returnee);
             }
             catch (Exception e) //rewind the changes
             {
@@ -227,5 +270,7 @@ namespace coursetask1
                 }
             }
         }
+
+
     }
 }

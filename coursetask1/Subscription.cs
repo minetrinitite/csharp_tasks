@@ -8,6 +8,15 @@ namespace coursetask1
         public string _name;
         public string _telNumber;
 
+        public IBook this[int index]
+        {
+            get
+            {
+                return this.owned[index];
+            }
+        }
+
+
         public Subscription(string name, string number)
         {
             this._name = name;

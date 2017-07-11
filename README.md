@@ -1,1 +1,1 @@
-First task in the c# course.
+Repo for tasks in C# course.

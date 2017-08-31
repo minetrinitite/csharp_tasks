@@ -8,6 +8,19 @@ namespace coursetask1
 {
     class Owner
     {
-        public List<Book> owned;
+        private List<Book> owned;
+
+        internal List<Book> Owned
+        {
+            get
+            {
+                return owned;
+            }
+
+            set
+            {
+                owned = value;
+            }
+        }
     }
 }

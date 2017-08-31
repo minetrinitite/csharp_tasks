@@ -10,8 +10,8 @@ namespace coursetask1
 
         Dictionary<string, string> getProperties();
 
-        List<Book> getBooks();
+        IEnumerable<Book> getBooks();
 
-        List<Book> getOverdueBooks();
+        IEnumerable<Book> getOverdueBooks();
     }
 }

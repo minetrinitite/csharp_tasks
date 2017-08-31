@@ -7,6 +7,7 @@ namespace coursetask1
 {
     class Book : IBook
     {
+        //TODO: book indexation
         public string _book;
         public string _author;
         public bool _rarity;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace coursetask1
 {
@@ -12,7 +13,7 @@ namespace coursetask1
         {
             get
             {
-                return this.owned[index];
+                return this.Owned[index];
             }
         }
 
@@ -21,47 +22,30 @@ namespace coursetask1
         {
             this._name = name;
             this._telNumber = number;
-            this.owned = new List<Book>();
+            this.Owned = new List<Book>();
         }
 
-        public List<Book> getBooks()
-        {
-            return this.owned;
+        public IEnumerable<Book> getBooks()
+        { 
+            return this.Owned;
         }
 
-        public List<Book> getOverdueBooks()
+        public IEnumerable<Book> getOverdueBooks()
         {
-            List<Book> overdue = new List<Book>();
-
-            foreach (Book book in this.owned)
-            {
-                if ((Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds > book._timeGiven + 1209600) //problem - it is seconds
-                {
-                    overdue.Add(book);
-                }
-            }
-            return overdue;
+            return this.Owned.Where(book => (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds > book._timeGiven + 1209600); //problem - it is seconds
         }
 
         public bool hasOverdue()
         {
-            foreach (Book book in this.owned)
-            {
-                if ((Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds > book._timeGiven + 1209600) //problem - it is seconds
-                {
-                    return true;
-                }
-            }
+            if (this.getOverdueBooks().Count() > 0)
+                return true;
             return false;
         }
 
         public bool hasRare()
         {
-            foreach (Book book in this.owned)
-            {
-                if (book._rarity)
-                    return true;
-            }
+            if (this.Owned.Where(book => book._rarity).Count() > 0)
+                return true;
             return false;
         }
 
